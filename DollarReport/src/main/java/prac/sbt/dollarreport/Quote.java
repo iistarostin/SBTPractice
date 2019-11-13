@@ -5,21 +5,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.LocalDate;
+import java.util.stream.Stream;
 
 @Entity
-public class RBCQuote {
+public class Quote {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     long id;
     LocalDate date;
     double value;
 
-    public RBCQuote(LocalDate date, double value) {
+    public Quote(LocalDate date, double value) {
         this.date = date;
         this.value = value;
     }
 
-    public RBCQuote() {
+    public Quote() {
     }
 
     public LocalDate getDate() {
@@ -30,4 +31,8 @@ public class RBCQuote {
         return value;
     }
 
+    @Override
+    public String toString() {
+        return date.toString() + "\t" + String.valueOf(value);
+    }
 }

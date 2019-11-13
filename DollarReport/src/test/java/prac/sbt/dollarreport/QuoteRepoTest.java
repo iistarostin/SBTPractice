@@ -8,16 +8,16 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 
 @SpringBootTest
-class RBCQuoteRepoTest {
+class QuoteRepoTest {
     @Autowired
-    RBCQuoteRepo rbcQuoteRepo;
+    QuoteRepo quoteRepo;
     @Test
     void storeAndGet() {
         LocalDate today = LocalDate.now(ZoneId.of("Europe/Moscow"));
-        rbcQuoteRepo.save(new RBCQuote(today, 100));
-        rbcQuoteRepo.save(new RBCQuote(today.minusDays(1), 150));
-        assert rbcQuoteRepo.findByDate(today) != null;
-        assert rbcQuoteRepo.findByDate(today.plusDays(1)) == null;
-        assert rbcQuoteRepo.findByDate(today.minusDays(1)).getValue() == 150;
+        quoteRepo.save(new Quote(today, 100));
+        quoteRepo.save(new Quote(today.minusDays(1), 150));
+        assert quoteRepo.findByDate(today) != null;
+        assert quoteRepo.findByDate(today.plusDays(1)) == null;
+        assert quoteRepo.findByDate(today.minusDays(1)).getValue() == 150;
     }
 }

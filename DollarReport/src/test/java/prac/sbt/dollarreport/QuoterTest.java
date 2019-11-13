@@ -13,16 +13,16 @@ import java.time.ZoneId;
 import java.util.List;
 
 @SpringBootTest
-class RBCQuoterTest {
+class QuoterTest {
 
     @InjectMocks
     @Autowired
-    RBCQuoter quote;
+    Quoter quote;
 
     @MockBean
     private HttpReader httpReader;
     @MockBean
-    private RBCQuoteRepo rbcQuoteRepo;
+    private QuoteRepo quoteRepo;
 
     List<String> testLines = List.of("USD000000TOD\t2019-09-17\t64.03\t64.44\t63.97\t64.3575\t725278000\t64.184");
     @Test
@@ -33,10 +33,10 @@ class RBCQuoterTest {
     }
 
     @Test
-    void getFromDatabase() throws IOException {
+    void getFromRepo() throws IOException {
 
-        Mockito.when(rbcQuoteRepo.findByDate(Mockito.any())).thenReturn(new RBCQuote(LocalDate.now(ZoneId.of("Europe/Moscow")), 100));
-        Mockito.when(rbcQuoteRepo.findAll()).thenReturn(List.of(new RBCQuote(LocalDate.now(ZoneId.of("Europe/Moscow")), 100)));
+        Mockito.when(quoteRepo.findByDate(Mockito.any())).thenReturn(new Quote(LocalDate.now(ZoneId.of("Europe/Moscow")), 100));
+        Mockito.when(quoteRepo.findAll()).thenReturn(List.of(new Quote(LocalDate.now(ZoneId.of("Europe/Moscow")), 100)));
         Mockito.when(httpReader.readHttp(Mockito.any())).thenThrow(new RuntimeException(new IllegalAccessException()));
         assert quote.getMaxQuote() == 100;
     }
