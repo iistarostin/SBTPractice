@@ -13,7 +13,6 @@ class OpenWeatherInterfaceTest {
     OpenWeatherInterface openWeather = new OpenWeatherInterface();
     @Test
     void loadRecords() throws APIException {
-        
         Stream<WeatherRecord> records = openWeather.loadRecords();
     }
 }
