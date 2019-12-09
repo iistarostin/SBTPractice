@@ -31,7 +31,7 @@ class QuoteServiceControllerTest {
     void getMaxQuote() throws Exception {
         mockMvc = MockMvcBuilders.standaloneSetup(quoteServiceController).build();
         Mockito.when(httpReader.readHttp(Mockito.any())).thenReturn(testLines.stream());
-        mockMvc.perform(MockMvcRequestBuilders.get("/"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/max"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string("64.184"));
     }
