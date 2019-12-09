@@ -15,10 +15,10 @@ import prac.sbt.utils.HttpReader;
 import java.util.List;
 
 @SpringBootTest
-class ControllerTest {
+class QuoteServiceControllerTest {
     @Autowired
     @InjectMocks
-    Controller controller;
+    QuoteServiceController quoteServiceController;
 
     MockMvc mockMvc;
 
@@ -29,7 +29,7 @@ class ControllerTest {
 
     @Test
     void getMaxQuote() throws Exception {
-        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(quoteServiceController).build();
         Mockito.when(httpReader.readHttp(Mockito.any())).thenReturn(testLines.stream());
         mockMvc.perform(MockMvcRequestBuilders.get("/"))
                 .andExpect(MockMvcResultMatchers.status().isOk())

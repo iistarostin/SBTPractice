@@ -12,6 +12,7 @@ public class Quote {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     long id;
+
     LocalDate date;
     double value;
 
@@ -20,8 +21,7 @@ public class Quote {
         this.value = value;
     }
 
-    public Quote() {
-    }
+    public Quote() { }
 
     public LocalDate getDate() {
         return date;

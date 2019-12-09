@@ -1,5 +1,6 @@
-package prac.sbt.dollarreport;
+package prac.sbt.utils;
 
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;

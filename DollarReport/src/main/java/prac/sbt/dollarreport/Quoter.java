@@ -11,12 +11,10 @@ import java.util.stream.StreamSupport;
 
 @Component
 public class Quoter {
-
     @Autowired
-    ExternalServiceInterface externalServiceInterface;
+    RBCInterface RBCInterface;
     @Autowired
     QuoteRepo quoteRepo;
-
 
     public double getMaxQuote() throws IOException {
         return getAllQuotes().map(Quote::getValue).max(Double::compareTo).get();
@@ -29,11 +27,11 @@ public class Quoter {
         return updateDatabase(getQuotesFromWeb());
     }
 
-    Stream<Quote> getQuotesFromWeb() throws IOException {
-        return externalServiceInterface.getQuotesFromRBC();
+    public Stream<Quote> getQuotesFromWeb() throws IOException {
+        return RBCInterface.getQuotesFromRBC();
     }
 
-    boolean quotesInRepoUpToDate() {
+    public boolean quotesInRepoUpToDate() {
         LocalDate today = LocalDate.now(ZoneId.of("Europe/Moscow"));
         Quote todayQuote = quoteRepo.findByDate(today);
         return todayQuote != null;
@@ -43,9 +41,9 @@ public class Quoter {
         return StreamSupport.stream(quoteRepo.findAll().spliterator(),false);
     }
 
-    Stream<Quote> updateDatabase(Stream<Quote> newQuotes)
+    public Stream<Quote> updateDatabase(Stream<Quote> newQuotes)
     {
         quoteRepo.deleteAll();
-        return newQuotes.peek((Quote quote) -> quoteRepo.save(quote));
+        return newQuotes.peek(quote -> quoteRepo.save(quote));
     }
 }

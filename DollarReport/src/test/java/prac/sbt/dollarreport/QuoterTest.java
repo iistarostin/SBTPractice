@@ -1,43 +1,46 @@
 package prac.sbt.dollarreport;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
 
-@SpringBootTest
+import static org.mockito.Mockito.when;
+
+@RunWith(MockitoJUnitRunner.class)
 class QuoterTest {
+    @Mock
+    RBCInterface RBCInterface;
+    @Mock
+    QuoteRepo quoteRepo;
 
     @InjectMocks
-    @Autowired
     Quoter quote;
 
-    @MockBean
-    private HttpReader httpReader;
-    @MockBean
-    private QuoteRepo quoteRepo;
+    List<Quote> testLines = List.of(new Quote(LocalDate.now(ZoneId.of("Europe/Moscow")), 64.184));
 
-    List<String> testLines = List.of("USD000000TOD\t2019-09-17\t64.03\t64.44\t63.97\t64.3575\t725278000\t64.184");
     @Test
     void getFromWeb() throws IOException {
-
-        Mockito.when(httpReader.readHttp(Mockito.any())).thenReturn(testLines.stream());
-        assert quote.getMaxQuote() == 64.184;
+        MockitoAnnotations.initMocks(this);
+        when(RBCInterface.getQuotesFromRBC()).thenReturn(testLines.stream());
+        Assertions.assertEquals(64.184, quote.getMaxQuote());
     }
 
     @Test
     void getFromRepo() throws IOException {
-
-        Mockito.when(quoteRepo.findByDate(Mockito.any())).thenReturn(new Quote(LocalDate.now(ZoneId.of("Europe/Moscow")), 100));
-        Mockito.when(quoteRepo.findAll()).thenReturn(List.of(new Quote(LocalDate.now(ZoneId.of("Europe/Moscow")), 100)));
-        Mockito.when(httpReader.readHttp(Mockito.any())).thenThrow(new RuntimeException(new IllegalAccessException()));
-        assert quote.getMaxQuote() == 100;
+        MockitoAnnotations.initMocks(this);
+        when(quoteRepo.findByDate(Mockito.any())).thenReturn(new Quote(LocalDate.now(ZoneId.of("Europe/Moscow")), 100));
+        when(quoteRepo.findAll()).thenReturn(List.of(new Quote(LocalDate.now(ZoneId.of("Europe/Moscow")), 100)));
+        when(RBCInterface.getQuotesFromRBC()).thenThrow(new RuntimeException(new IllegalAccessException()));
+        Assertions.assertEquals(100, quote.getMaxQuote());
     }
 }

@@ -1,4 +1,4 @@
-package prac.sbt.dollarreport;
+package prac.sbt.utils;
 
 import org.springframework.stereotype.Component;
 import prac.sbt.utils.HttpReader;
