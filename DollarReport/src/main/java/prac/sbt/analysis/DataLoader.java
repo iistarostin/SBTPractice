@@ -7,20 +7,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import prac.sbt.dollarreport.Quote;
 import prac.sbt.utils.HttpReader;
-import prac.sbt.utils.SimpleHttpReader;
+import prac.sbt.dollarreport.SimpleHttpReader;
 import prac.sbt.weatherreport.WeatherRecord;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Component
 public class DataLoader {
+    @Autowired
     HttpReader httpReader;
     @Autowired
     ObjectMapper objectMapper;
