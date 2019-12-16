@@ -19,13 +19,13 @@ public class WeatherServiceController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     @ResponseBody
-    String getAllQuotes() throws APIException {
+    String getAllQuotes() throws APIException, IOException {
         return recordFetcher.getAllRecords().map(WeatherRecord::toString).collect(Collectors.joining("<br>\n"));
     }
 
     @RequestMapping(value = "/json/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    List<WeatherRecord> getAllQuotesJSON() throws APIException {
+    List<WeatherRecord> getAllQuotesJSON() throws APIException, IOException {
         return recordFetcher.getAllRecords().collect(Collectors.toList());
     }
 

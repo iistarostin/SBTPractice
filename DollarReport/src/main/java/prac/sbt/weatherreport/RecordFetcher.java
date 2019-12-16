@@ -4,6 +4,7 @@ import net.aksingh.owmjapis.api.APIException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.stream.Stream;
@@ -15,14 +16,14 @@ public class RecordFetcher {
     RecordRepo repo;
     @Autowired
     OpenWeatherInterface openWeather;
-    public Stream<WeatherRecord> getAllRecords() throws APIException {
+    public Stream<WeatherRecord> getAllRecords() throws APIException, IOException {
         if (quotesInRepoUpToDate()) {
             return getRecordsFromRepo();
         }
         return updateDatabase(getRecordsFromWeb());
     }
 
-    public Stream<WeatherRecord> getRecordsFromWeb() throws APIException {
+    public Stream<WeatherRecord> getRecordsFromWeb() throws APIException, IOException {
         return openWeather.loadRecords();
     }
 

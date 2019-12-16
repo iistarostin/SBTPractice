@@ -35,10 +35,10 @@ public class DataLoader {
         return objectMapper.readValue(json, new TypeReference<List<WeatherRecord>>() {
         }).stream();
     }
-    public Stream<Pair<Double, Double>> getData() throws IOException {
+    public Stream<Observation> getData() throws IOException {
         Stream<Quote> quotes = loadQuotes();
         Stream<WeatherRecord> records = loadRecords();
         Map<LocalDate, Double> quoteMap = quotes.collect(Collectors.toMap(Quote::getDate, Quote::getValue));
-        return records.filter(wr -> quoteMap.containsKey(wr.getDate())).map(wr -> new Pair<Double, Double>(wr.getTemp(), quoteMap.get(wr.getDate())));
+        return records.filter(wr -> quoteMap.containsKey(wr.getDate())).map(wr -> new Observation(wr.getTemp(), quoteMap.get(wr.getDate())));
     }
 }

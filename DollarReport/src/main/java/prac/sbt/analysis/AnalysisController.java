@@ -35,8 +35,8 @@ public class AnalysisController {
     }
     @RequestMapping(value = "/data", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    List<Pair<Double, Double>> getData() throws IOException {
-        List<Pair<Double, Double>> data = loader.getData().collect(Collectors.toList());
+    List<Observation> getData() throws IOException {
+        List<Observation> data = loader.getData().collect(Collectors.toList());
         return data;
     }
 }

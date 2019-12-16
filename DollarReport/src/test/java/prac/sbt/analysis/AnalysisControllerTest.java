@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import prac.sbt.weatherreport.OpenWeatherInterface;
 import prac.sbt.weatherreport.WeatherRecord;
 
+import javax.management.ObjectName;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,13 +27,13 @@ class AnalysisControllerTest {
 
     MockMvc mockMvc;
 
-    List<Pair<Double, Double>> testLines = List.of(new Pair<Double, Double>(0.0, 0.0), new Pair<Double, Double>(1.0, 1.0), new Pair<Double, Double>(2.0, 2.0));
+    List<Observation> testLines = List.of(new Observation(0.0, 0.0), new Observation(1.0, 1.0), new Observation(2.0, 2.0));
 
     @MockBean
     private DataLoader dataLoader;
 
     @Test
-    void getMaxQuote() throws Exception {
+    void getSignificance() throws Exception {
         mockMvc = MockMvcBuilders.standaloneSetup(analysisController).build();
         Mockito.when(dataLoader.getData()).thenReturn(testLines.stream());
         mockMvc.perform(MockMvcRequestBuilders.get("/sig"))

@@ -12,10 +12,10 @@ import java.util.stream.Stream;
 @Component
 public class MLModel {
 
-    public double getSignificance(List<Pair<Double, Double>> data) {
+    public double getSignificance(List<Observation> data) {
         SimpleRegression simpleRegression = new SimpleRegression();
-        for (Pair<Double, Double> datum : data) {
-            simpleRegression.addData(datum.getFirst(), datum.getSecond());
+        for (Observation observation : data) {
+            simpleRegression.addData(observation.temperature, observation.price);
         }
         simpleRegression.regress();
         return simpleRegression.getSignificance();
