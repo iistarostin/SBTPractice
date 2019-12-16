@@ -20,22 +20,22 @@ public class AnalysisController {
     DataLoader loader;
     @RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     @ResponseBody
-    String getSignificance() throws IOException {
+    public String getSignificance() throws IOException {
         return "Dependency significance: " + String.valueOf(model.getSignificance(loader.getData().collect(Collectors.toList())));
     }
     @RequestMapping(value = "/sig", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    double getOnlySignificance() throws IOException {
+    public double getOnlySignificance() throws IOException {
         return model.getSignificance(loader.getData().collect(Collectors.toList()));
     }
     @RequestMapping(value = "/json", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    Double getSignificanceJSON() throws IOException {
+    public Double getSignificanceJSON() throws IOException {
         return model.getSignificance(loader.getData().collect(Collectors.toList()));
     }
     @RequestMapping(value = "/data", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    List<Observation> getData() throws IOException {
+    public List<Observation> getData() throws IOException {
         List<Observation> data = loader.getData().collect(Collectors.toList());
         return data;
     }

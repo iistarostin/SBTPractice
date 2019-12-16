@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -18,27 +15,27 @@ public class QuoteServiceController {
     @Autowired
     Quoter quoter;
 
-    @RequestMapping("/max")
+    @GetMapping("/max")
     @ResponseBody
     double getMaxQuote() throws IOException {
         return quoter.getMaxQuote();
     }
 
-    @RequestMapping("/")
+    @GetMapping("/")
     @ResponseBody
-    String getAllQuotes() throws IOException {
+    public String getAllQuotes() throws IOException {
         return quoter.getAllQuotes().map(Quote::toString).collect(Collectors.joining("<br>\n"));
     }
 
     @RequestMapping(value = "/json/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    List<Quote> getAllQuotesJSON() throws IOException {
+    public List<Quote> getAllQuotesJSON() throws IOException {
         return quoter.getAllQuotes().collect(Collectors.toList());
     }
 
-    @RequestMapping("/local")
+    @GetMapping("/local")
     @ResponseBody
-    String getRepoQuotes() throws IOException {
+    public String getRepoQuotes() throws IOException {
         return quoter.getQuotesFromRepo().map(Quote::toString).collect(Collectors.joining("<br>\n"));
     }
 }
