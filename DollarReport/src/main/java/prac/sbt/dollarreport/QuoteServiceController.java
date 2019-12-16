@@ -17,7 +17,7 @@ public class QuoteServiceController {
 
     @GetMapping("/max")
     @ResponseBody
-    double getMaxQuote() throws IOException {
+    public double getMaxQuote() throws IOException {
         return quoter.getMaxQuote();
     }
 
