@@ -1,5 +1,6 @@
 package prac.sbt.weatherreport;
 
+
 import net.aksingh.owmjapis.api.APIException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

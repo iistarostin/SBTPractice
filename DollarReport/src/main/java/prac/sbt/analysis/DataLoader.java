@@ -2,13 +2,11 @@ package prac.sbt.analysis;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.math3.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import prac.sbt.weatherreport.WeatherRecord;
 import prac.sbt.dollarreport.Quote;
 import prac.sbt.utils.HttpReader;
-import prac.sbt.dollarreport.SimpleHttpReader;
-import prac.sbt.weatherreport.WeatherRecord;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -24,7 +22,7 @@ public class DataLoader {
     @Autowired
     ObjectMapper objectMapper;
     public DataLoader() {
-        httpReader = new SimpleHttpReader();
+        httpReader = new BulkHTTPReader();
     }
     Stream<Quote> loadQuotes() throws IOException {
         String json = httpReader.readHttp("http://localhost:8092/json/all").collect(Collectors.joining());

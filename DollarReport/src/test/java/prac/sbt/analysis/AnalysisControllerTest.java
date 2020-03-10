@@ -1,6 +1,5 @@
 package prac.sbt.analysis;
 
-import org.apache.commons.math3.util.Pair;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mockito;
@@ -11,13 +10,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import prac.sbt.weatherreport.OpenWeatherInterface;
-import prac.sbt.weatherreport.WeatherRecord;
 
-import javax.management.ObjectName;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class AnalysisControllerTest {

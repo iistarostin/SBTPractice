@@ -1,7 +1,6 @@
 package prac.sbt.weatherreport;
 
 import net.aksingh.owmjapis.api.APIException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -35,7 +34,7 @@ class RecordFetcherTest {
     void getRecordsFromWeb() throws IOException, APIException {
         MockitoAnnotations.initMocks(this);
         when(openWeatherInterface.loadRecords()).thenReturn(testLines.stream());
-        Assertions.assertEquals(64.184, recordFetcher.getRecordsFromWeb().findFirst().get().getTemp());
+        assertEquals(64.184, recordFetcher.getRecordsFromWeb().findFirst().get().getTemp());
     }
 
     @Test
@@ -44,6 +43,6 @@ class RecordFetcherTest {
         when(recordRepo.findByDate(Mockito.any())).thenReturn(new WeatherRecord(LocalDate.now(ZoneId.of("Europe/Moscow")), 100));
         when(recordRepo.findAll()).thenReturn(List.of(new WeatherRecord(LocalDate.now(ZoneId.of("Europe/Moscow")), 100)));
         when(openWeatherInterface.loadRecords()).thenThrow(new RuntimeException(new IllegalAccessException()));
-        Assertions.assertEquals(100, recordFetcher.getAllRecords().findFirst().get().getTemp());
+        assertEquals(100, recordFetcher.getAllRecords().findFirst().get().getTemp());
     }
 }

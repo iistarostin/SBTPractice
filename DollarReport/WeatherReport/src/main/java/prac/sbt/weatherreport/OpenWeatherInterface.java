@@ -1,31 +1,17 @@
 package prac.sbt.weatherreport;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import net.aksingh.owmjapis.api.APIException;
-import net.aksingh.owmjapis.model.AccumulatedWeatherList;
-import net.aksingh.owmjapis.model.CurrentWeather;
-import net.aksingh.owmjapis.model.param.WeatherData;
-import org.apache.tomcat.jni.SSL;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import net.aksingh.owmjapis.model.HistoricalWeatherList;
 import net.aksingh.owmjapis.core.OWMPro;
 
-import javax.net.ssl.SSLContext;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.security.NoSuchAlgorithmException;
-import java.security.Security;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
