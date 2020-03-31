@@ -18,6 +18,8 @@ import java.util.stream.Stream;
 @Component
 public class DataLoader {
     @Autowired
+    NetworkProperties networkProperties;
+    @Autowired
     HttpReader httpReader;
     @Autowired
     ObjectMapper objectMapper;
@@ -25,11 +27,11 @@ public class DataLoader {
         httpReader = new BulkHTTPReader();
     }
     Stream<Quote> loadQuotes() throws IOException {
-        String json = httpReader.readHttp("http://localhost:8092/json/all").collect(Collectors.joining());
+        String json = httpReader.readHttp(networkProperties.getDollarServiceURL().concat("/json/all")).collect(Collectors.joining());
         return objectMapper.readValue(json, new TypeReference<List<Quote>>(){}).stream();
     }
     Stream<WeatherRecord> loadRecords() throws IOException {
-        String json = httpReader.readHttp("http://localhost:8093/json/all").collect(Collectors.joining());
+        String json = httpReader.readHttp(networkProperties.getWeatherServiceURL().concat("/json/all")).collect(Collectors.joining());
         return objectMapper.readValue(json, new TypeReference<List<WeatherRecord>>() {
         }).stream();
     }

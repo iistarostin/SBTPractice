@@ -2,7 +2,8 @@ version: '3'
 services:
   analysis:
       build: .
-      network_mode: "host"
+      ports:
+          - "8091:8080"
       
   dollar:
       build: ./DollarReport
@@ -10,7 +11,15 @@ services:
           - "8092:8080"
       
   weather:
-      build: ./WeatherReport
+      build:
+        context: ./WeatherReport
+      environment:
       ports:
           - "8093:8080"
-      
+  db:
+      image: postgres
+      ports:
+          - "5432:5432"
+      environment:
+          POSTGRES_HOST_AUTH_METHOD: "trust"
+
