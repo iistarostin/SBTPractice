@@ -1,0 +1,14 @@
+- hosts: serv2.prac.sbt
+  become: yes
+  vars:
+    ansible_become_pass: aNSHaPi
+  tasks:
+    - name: Stop dollar service
+      docker_container:
+        name: dollarreport_dollar_starostin
+        state: stopped
+
+    - name: Stop analysis service
+      docker_container:
+        name: dollarreport_analysis_starostin
+        state: stopped

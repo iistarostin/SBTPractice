@@ -1,0 +1,54 @@
+- hosts: serv1.prac.sbt
+  become: yes
+  vars:
+    ansible_become_pass: cHONtic
+  tasks:
+    - name: Install docker
+      yum:
+        name: docker
+        state: present
+
+    - name: Install pip2
+      yum:
+        name: python-pip
+        update_cache: yes
+        state: present
+
+    - name: Install docker python SDK
+      pip:
+        extra_args: --upgrade
+        name: docker
+
+    - name: Copy service image
+      copy:
+        src: ./weather.tar
+        dest: ./starostin/weather.tar
+    
+    - name: Load service image
+      docker_image:
+        name: dollarreport_weather
+        state: present
+        source: load
+        load_path: ./starostin/weather.tar
+    
+    - name: Start DB
+      docker_container:
+        name: postgres_starostin
+        image: postgres
+        state: started
+        restart: yes
+        ports:
+        - "5432:5432"
+        env:
+          POSTGRES_HOST_AUTH_METHOD: "trust"
+
+    - name: Start weather service
+      docker_container:
+        name: dollarreport_weather_starostin
+        image: dollarreport_weather
+        state: started
+        restart: yes
+        ports:
+          - "8080:8080"
+        links:
+          - "postgres_starostin:db"

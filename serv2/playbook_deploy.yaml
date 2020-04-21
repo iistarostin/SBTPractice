@@ -1,0 +1,65 @@
+- hosts: serv2.prac.sbt
+  become: yes
+  vars:
+    ansible_become_pass: aNSHaPi
+  tasks:
+    - name: Install docker
+      yum:
+        name: docker
+        state: present
+
+    - name: Install pip2
+      yum:
+        name: python-pip
+        update_cache: yes
+        state: present
+
+    - name: Install docker python SDK
+      pip:
+        extra_args: --upgrade
+        name: docker
+
+    - name: Copy dollar service image
+      copy:
+        src: ./dollar.tar
+        dest: ./starostin/dollar.tar
+
+    - name: Copy analysis service image
+      copy:
+        src: ./analysis.tar
+        dest: ./starostin/analysis.tar
+
+    - name: Load dollar service image
+      docker_image:
+        name: dollarreport_dollar
+        state: present
+        source: load
+        load_path: ./starostin/dollar.tar
+    
+    - name: Load analysis service image
+      docker_image:
+        name: dollarreport_analysis
+        state: present
+        source: load
+        load_path: ./starostin/analysis.tar
+
+    - name: Start dollar service
+      docker_container:
+        name: dollarreport_dollar_starostin
+        image: dollarreport_dollar
+        state: started
+        restart: yes
+        ports:
+          - "8092:8080"
+
+    - name: Start analysis service
+      docker_container:
+        name: dollarreport_analysis_starostin
+        image: dollarreport_analysis
+        state: started
+        restart: yes
+        ports:
+          - "8091:8080"
+        links:
+          - "dollarreport_dollar_starostin:dollar"
+        etc_hosts: {"weather": "176.119.156.76"}
