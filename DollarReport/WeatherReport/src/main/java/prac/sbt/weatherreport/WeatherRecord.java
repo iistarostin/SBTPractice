@@ -7,7 +7,7 @@ import java.time.LocalDate;
 @Entity
 public class WeatherRecord {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
     LocalDate date;

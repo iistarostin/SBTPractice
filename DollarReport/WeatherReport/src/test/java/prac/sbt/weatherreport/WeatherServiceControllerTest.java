@@ -32,8 +32,7 @@ class WeatherServiceControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(weatherServiceController).build();
         Mockito.when(openWeatherInterface.loadRecords()).thenReturn(testLines.stream());
         mockMvc.perform(MockMvcRequestBuilders.get("/json/all"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string("[]"));
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
 }
