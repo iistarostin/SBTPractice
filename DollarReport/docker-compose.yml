@@ -13,7 +13,6 @@ services:
   weather:
       build:
         context: ./WeatherReport
-      environment:
       ports:
           - "8093:8080"
   db:
