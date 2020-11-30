@@ -1,0 +1,14 @@
+- hosts: serv1.prac.sbt
+  become: yes
+  vars:
+    ansible_become_pass: cHONtic
+  tasks:
+    - name: Stop DB
+      docker_container:
+        name: postgres_starostin
+        state: stopped
+
+    - name: Stop weather service
+      docker_container:
+        name: dollarreport_weather_starostin
+        state: stopped

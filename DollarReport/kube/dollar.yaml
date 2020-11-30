@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dollar
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dollar
+  template:
+    metadata:
+      name: dollar
+      labels:
+        app: dollar
+    spec:
+      containers:
+        - name: dollar
+          image: dollar
+          imagePullPolicy: IfNotPresent
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dollar
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+  selector:
+    app: dollar
